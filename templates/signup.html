@@ -1,0 +1,34 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="jumbotron vertical-center">
+  <div class="container d-flex justify-content-center">
+    <form>
+      <h1>Sign up</h1>
+
+      <div class="form-outline mb-4">
+        <input class="form-control" type="username" />
+        <label class="form-label">Username</label>
+      </div>
+
+      <div class="form-outline mb-4">
+        <input class="form-control" type="password" />
+        <label class="form-label">Password</label>
+      </div>
+
+      <div class="text-center">
+        <button
+          class="btn btn-danger btn-block mb-4 text-center btnSize"
+          type="button"
+        >
+          Sign up
+        </button>
+      </div>
+
+      <div class="text-center">
+        <p>Already have an account? <a href="/signin">Sign in</a></p>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="jumbotron vertical-center">
+  <div class="container">
+    <h1 class="centerPlatformText">Select a platform</h1>
+    <div class="row">
+      <div class="col-4">
+        <a href="/ps5">
+          <div class="card">
+            <!-- image location is temporary -->
+            <img src="static/PS5_logo.png" class="card-img-top" href="/ps5" />
+          </div>
+        </a>
+      </div>
+      <div class="col-4">
+        <a href="/ps5">
+          <div class="card">
+            <!-- image location is temporary -->
+            <img
+              src="static/xbox_series_x_logo.png"
+              class="card-img-top"
+              href="/xboxx"
+            />
+          </div>
+        </a>
+      </div>
+      <div class="col-4">
+        <a href="/ps5">
+          <div class="card">
+            <!-- image location is temporary -->
+            <img
+              src="static/nintendo_switch_logo.png"
+              class="card-img-top"
+              href="/nswitch"
+            />
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
