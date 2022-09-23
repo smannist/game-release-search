@@ -2,20 +2,20 @@
 
 <div class="jumbotron vertical-center">
   <div class="container d-flex justify-content-center">
-    <form>
+    <form action="/signin" method="POST">
       <h1>Sign in</h1>
       <div class="form-outline mb-4">
-        <input class="form-control" type="username" />
-        <label class="form-label">Username</label>
+        <input class="form-control" type="text" name="username" />
+        <label class="form-label" for="username">Username</label>
       </div>
       <div class="form-outline mb-4">
-        <input class="form-control" type="password" />
-        <label class="form-label">Password</label>
+        <input class="form-control" type="text" name="password" />
+        <label class="form-label" for="password">Password</label>
       </div>
       <div class="text-center">
         <button
           class="btn btn-danger btn-block mb-4 text-center btnSize"
-          type="button"
+          type="submit"
         >
           Sign in
         </button>

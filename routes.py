@@ -1,17 +1,37 @@
-from flask import render_template, request
+from flask import render_template, redirect, request, session, flash
 from app import app
+from services import user
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
-@app.route("/signin")
+@app.route("/signin", methods=["POST", "GET"])
 def signin():
-    return render_template("signin.html")
+    if request.method == "GET":
+        return render_template("signin.html")
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        if user.validate_user(username, password):
+            session["username"] = username
+            return redirect("/platforms")
+        return render_template("signin.html")
 
-@app.route("/signup")
-def singup():
-    return render_template("signup.html")
+@app.route("/signout")
+def signout():
+    del session["username"]
+    return redirect("/")
+
+@app.route("/signup", methods=["POST", "GET"])
+def signup():
+    if request.method == "GET":
+        return render_template("signup.html")
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        user.create_user(username,password)
+        return redirect("/signin")
 
 @app.route("/platforms")
 def platforms():
