@@ -4,9 +4,13 @@ from db import db
 
 def create_user(username, password):
     hash_value = generate_password_hash(password)
-    sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
-    db.session.execute(sql, {"username":username, "password":hash_value})
-    db.session.commit()
+    try:
+        sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
+        db.session.execute(sql, {"username":username, "password":hash_value})
+        db.session.commit()
+        return True
+    except:
+        return False
 
 def validate_user(username, password):
     sql = "SELECT id, password FROM users WHERE username=:username"
