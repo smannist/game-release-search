@@ -16,7 +16,7 @@ def signin():
         if user.validate_user(username, password):
             session["username"] = username
             return redirect("/platforms")
-        return render_template("signin.html")
+        return render_template("signin.html", error=True)
 
 @app.route("/signout")
 def signout():
@@ -30,11 +30,9 @@ def signup():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        if not username or not password:
-            return render_template("signup.html", message="Fields cannot be empty. Please try again.")
-        if not user.create_user(username, password):
-            return render_template("signup.html", message="Username already taken. Please try again.")
-        return redirect("/signin")
+        if user.create_user(username, password):
+            return redirect("/signin")
+        return render_template("signup.html", error=True)
 
 @app.route("/platforms")
 def platforms():
