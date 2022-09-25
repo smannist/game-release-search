@@ -1,6 +1,6 @@
-from flask import render_template, redirect, request, session
+from flask import render_template, redirect, request, session, make_response
 from app import app
-from services import user
+from services import user, platform
 
 @app.route("/")
 def index():
@@ -36,4 +36,17 @@ def signup():
 
 @app.route("/platforms")
 def platforms():
-    return render_template("platforms.html")
+    platforms = platform.get_platform()
+    return render_template("platforms.html", platforms=platforms)
+
+@app.route("/platforms/<string:platform>/games")
+def games(platform):
+    # TODO
+    return 0
+
+@app.route("/image/<int:id>")
+def images(id):
+    data = platform.get_platform_image(id)
+    response = make_response(bytes(data))
+    response.headers.set("Content-Type", "image/jpeg")
+    return response

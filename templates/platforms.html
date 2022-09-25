@@ -1,35 +1,35 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "layout.html" %} {% block content %} {% if session.username %} 
 
 <div class="jumbotron vertical-center">
   <div class="container">
     <h1 class="centerPlatformText">Select a platform</h1>
     <div class="row">
+      {% for platforms in platforms %}
       <div class="col-4">
-        <a href="/ps5">
+        <a href="/{{ platforms.name }}/games">
           <div class="card">
-            <!-- image location is temporary -->
-            <img src="static/PS5_logo.png" class="card-img-top" href="/ps5" />
+            <img src="/image/{{ platforms.id }}" class="card-img-top" />
           </div>
         </a>
       </div>
-      <div class="col-4">
-        <a href="/xboxseriesx">
-          <div class="card">
-            <!-- image location is temporary -->
-            <img src="static/xbox_series_x_logo.png" class="card-img-top" />
-          </div>
-        </a>
-      </div>
-      <div class="col-4">
-        <a href="/nswitch">
-          <div class="card">
-            <!-- image location is temporary -->
-            <img src="static/nintendo_switch_logo.png" class="card-img-top" />
-          </div>
-        </a>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </div>
 
-{% endblock %}
+{% else %}
+
+<div class="jumbotron vertical-center">
+  <div class="container d-flex justify-content-center">
+      <div class="row">
+        <div class="col-md">
+          <p>
+            You must be signed in to access platforms
+          </p>
+        </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endif %} {% endblock %}
