@@ -1,8 +1,8 @@
 # Description
 
-The application allows the user to search for the latest video game releases on most modern platforms (PC, PS5, etc.) as well as rate them based on their level of interest.
+The application allows the user to search for the latest video game releases on most modern platforms (e.g. PC, PS5) as well as rate them based on their level of interest.
 
-# Features
+## Features
 
 * The user can create a new account, which can then be used to log in to the application
 * The user will be able to see a list of all available platforms
@@ -12,4 +12,10 @@ The application allows the user to search for the latest video game releases on 
 * The user can see a list of video games they have previously rated
 * The administrator can edit, add, and remove platforms and / or games
 * The administrator can see a list of all video game ratings
-* The administrator can delete video game ratings (in-case of abuse)
+* The administrator can delete video game ratings
+
+## Current state and testing the application
+
+Currently it's possible for the user to sign up, sign in, sign out and view platform selection.
+
+The application can be tested at [Heroku](https://game-release-search.herokuapp.com/).
