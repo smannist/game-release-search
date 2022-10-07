@@ -11,8 +11,16 @@ def get_game_info(platform):
 
 def get_average_game_rating():
       sql = "SELECT TRUNC(AVG(rating),2) AS rating, game_id FROM ratings \
-            INNER JOIN games on games.id=ratings.game_id \
+            INNER JOIN games ON games.id=ratings.game_id \
             WHERE games.id=ratings.game_id \
             GROUP BY game_id"
       result = db.session.execute(sql)
+      return result.fetchall()
+
+def get_user_rated_games(username):
+      sql = "SELECT rating, games.title, users.username FROM ratings \
+            INNER JOIN games ON games.id=ratings.game_id \
+            INNER JOIN users ON users.id=ratings.user_id \
+            WHERE games.id=ratings.game_id AND users.username=:username"
+      result = db.session.execute(sql, {"username":username})
       return result.fetchall()

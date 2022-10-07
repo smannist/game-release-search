@@ -1,0 +1,18 @@
+{% extends "layout.html" %} {% block content %} {% if session.username %}
+
+<div class="jumbotron vertical-center">
+  <div class="container">
+    <div class="row bg-danger">
+      <div class="col info-text-games">Title</div>
+      <div class="col info-text-games">My rating</div>
+    </div>
+    {% for user_ratings in user_ratings %}
+    <div class="row">
+      <div class="col">{{ user_ratings.title }}</div>
+      <div class="col">{{ user_ratings.rating }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% endif %} {% endblock %}
+</div>

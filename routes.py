@@ -51,3 +51,10 @@ def images(id):
     response = make_response(bytes(data))
     response.headers.set("Content-Type", "image/jpeg")
     return response
+
+@app.route("/<string:username>/myratings")
+def myratings(username):
+    if session["username"] == username:
+        user_ratings = game.get_user_rated_games(username)
+        return render_template("myratings.html", user_ratings=user_ratings)
+    return render_template("restrict.html")
