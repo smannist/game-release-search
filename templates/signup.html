@@ -5,7 +5,7 @@
     <form action="/signup" method="POST">
       <h1>Create an account</h1>
       {% if error %}
-      <p>Username already taken. Please try again.</p>
+      <p>Username is already taken or it contains invalid characters.</p>
       {% endif %}
       <div class="form-outline mb-4">
         <input class="form-control" type="text" name="username" required />

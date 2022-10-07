@@ -1,16 +1,19 @@
 from flask import Flask, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from db import db
+from utils import util
 
 def create_user(username, password):
-    hash_value = generate_password_hash(password)
-    try:
-        sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
-        db.session.execute(sql, {"username":username, "password":hash_value})
-        db.session.commit()
-        return True
-    except:
-        return False
+    if util.check_input(username, password):
+        hash_value = generate_password_hash(password)
+        try:
+            sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
+            db.session.execute(sql, {"username":username, "password":hash_value})
+            db.session.commit()
+            return True
+        except:
+            return False
+    return False
 
 def validate_user(username, password):
     sql = "SELECT id, password FROM users WHERE username=:username"
