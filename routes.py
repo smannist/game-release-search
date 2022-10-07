@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request, session, make_response
 from app import app
-from services import user, platform
+from services import user, platform, game
 
 @app.route("/")
 def index():
@@ -41,8 +41,9 @@ def platforms():
 
 @app.route("/platforms/<string:platform>/games")
 def games(platform):
-    # TODO
-    return 0
+    games = game.get_game_info(platform)
+    ratings = game.get_average_game_rating()
+    return render_template("games.html", games=games, ratings=ratings)
 
 @app.route("/image/<int:id>")
 def images(id):
