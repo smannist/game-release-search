@@ -13,11 +13,16 @@
       <div class="col">{{ games.title }}</div>
       <div class="col">{{ games.synopsis }}</div>
       <div class="col">{{ games.release_date }}</div>
-      {% for ratings in ratings %}
-      {% if games.id == ratings.game_id %}
+      {% if games.israted == true  %}
+        {% for ratings in ratings %}
+          {% if games.id == ratings.game_id %}
       <div class="col">{{ ratings.rating }}</div>
+          {% endif %}
+        {% endfor %}
       {% endif %}
-      {% endfor %}
+      {% if games.israted == false %}
+      <div class="col">Unrated</div>
+      {% endif %}
     </div>
     {% endfor %}
   </div>

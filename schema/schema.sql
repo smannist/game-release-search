@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS games (
     title TEXT UNIQUE,
     synopsis TEXT,
     release_date DATE,
-    platform_id INT REFERENCES platforms(id)
+    platform_id INT REFERENCES platforms(id),
+    israted BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS ratings (

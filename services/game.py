@@ -3,7 +3,7 @@ from db import db
 
 def get_game_info(platform):
     platform.replace("%20", " ")
-    sql = "SELECT title, synopsis, to_char(release_date, 'DD/MM/YYYY') AS release_date, name, games.id FROM games \
+    sql = "SELECT title, synopsis, to_char(release_date, 'DD/MM/YYYY') AS release_date, name, games.id, israted FROM games \
            INNER JOIN platforms ON platforms.id=games.platform_id \
            WHERE platforms.name=:platform"
     result = db.session.execute(sql, {"platform":platform})
