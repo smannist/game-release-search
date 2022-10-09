@@ -4,6 +4,11 @@ CREATE TABLE IF NOT EXISTS users (
     password TEXT
 );
 
+CREATE TABLE IF NOT EXISTS (
+    role TEXT UNIQUE,
+    user_id INT REFERENCES users(id)
+)
+
 CREATE TABLE IF NOT EXISTS platforms (
     id SERIAL PRIMARY KEY,
     name TEXT UNIQUE,
