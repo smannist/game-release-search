@@ -6,3 +6,7 @@ def check_input(username, password):
         if char == " " or len(password) < 3:
             return False
     return True
+
+def string_to_list(string):
+    rating_list = string.split(",")
+    return rating_list

@@ -2,26 +2,52 @@
 
 <div class="jumbotron vertical-center">
   <div class="container">
+    <h1>Upcoming games</h1>
     <div class="row bg-danger">
       <div class="col info-text-games">Title</div>
       <div class="col info-text-games">Synopsis</div>
       <div class="col info-text-games">Release date</div>
       <div class="col info-text-games">Rating</div>
+      <div class="col info-text-games">Rate (0-5)</div>
     </div>
     {% for games in games %}
     <div class="row">
       <div class="col">{{ games.title }}</div>
       <div class="col">{{ games.synopsis }}</div>
       <div class="col">{{ games.release_date }}</div>
-      {% if games.israted == true  %}
-        {% for ratings in ratings %}
-          {% if games.id == ratings.game_id %}
-      <div class="col">{{ ratings.rating }}</div>
+      {% if games.israted == true %}
+        {% for all_ratings in all_ratings %}
+          {% if games.id == all_ratings.game_id %}
+      <div class="col">{{ all_ratings.rating }}</div>
+      <div class="col">
+        <form action="/platforms/{{ platform }}/games" method="POST">
+          <input type="radio" name="rating_info" value="0,{{ games.id }}">
+          <input type="radio" name="rating_info" value="1,{{ games.id }}">
+          <input type="radio" name="rating_info" value="2,{{ games.id }}">
+          <input type="radio" name="rating_info" value="3,{{ games.id }}">
+          <input type="radio" name="rating_info" value="4,{{ games.id }}">
+          <input type="radio" name="rating_info" value="5,{{ games.id }}">
+          <input type="submit" value="Confirm">
+        </form>
+      </div>
           {% endif %}
         {% endfor %}
       {% endif %}
       {% if games.israted == false %}
       <div class="col">Unrated</div>
+      <div class="col">
+        <div class="col">
+          <form action="/rate" method="POST">
+            <input type="radio" name="rating_info" value="0,{{ games.id }}">
+            <input type="radio" name="rating_info" value="1,{{ games.id }}">
+            <input type="radio" name="rating_info" value="2,{{ games.id }}">
+            <input type="radio" name="rating_info" value="3,{{ games.id }}">
+            <input type="radio" name="rating_info" value="4,{{ games.id }}">
+            <input type="radio" name="rating_info" value="5,{{ games.id }}">
+            <input type="submit" value="Confirm">
+          </form>
+        </div>
+      </div>
       {% endif %}
     </div>
     {% endfor %}

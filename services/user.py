@@ -1,3 +1,4 @@
+from unittest import result
 from flask import Flask, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from db import db
@@ -27,3 +28,9 @@ def validate_user(username, password):
             session["username"] = username
             return True
     return False
+
+def get_user_id(username):
+    sql = "SELECT id FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":username})
+    id = result.fetchone()[0]
+    return id

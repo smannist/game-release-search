@@ -1,6 +1,7 @@
 from flask import render_template, redirect, request, session, make_response
 from app import app
 from services import user, platform, game
+from utils import util
 
 @app.route("/")
 def index():
@@ -39,11 +40,20 @@ def platforms():
     platforms = platform.get_platform()
     return render_template("platforms.html", platforms=platforms)
 
-@app.route("/platforms/<string:platform>/games")
+@app.route("/platforms/<string:platform>/games", methods=["GET", "POST"])
 def games(platform):
-    games = game.get_game_info(platform)
-    ratings = game.get_average_game_rating()
-    return render_template("games.html", games=games, ratings=ratings)
+    if request.method == "GET":
+        games = game.get_game_info(platform)
+        all_ratings = game.get_rating_info()
+        return render_template("games.html", games=games, all_ratings=all_ratings, platform=platform)
+    if request.method == "POST":
+        rating_info = util.string_to_list(request.form["rating_info"])
+        rating = rating_info[0]
+        game_id = rating_info[1]
+        user_id = user.get_user_id(session["username"])
+        game.set_rated_true(game_id)
+        game.rate_game(rating, user_id, game_id)
+        return redirect("/platforms/{}/games".format(platform))
 
 @app.route("/image/<int:id>")
 def images(id):

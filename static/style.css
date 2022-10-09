@@ -5,6 +5,25 @@
     align-items: center;
   }
 
+.float-container {
+    align-items: center;
+    padding: 20px;
+}
+
+.setBorder {
+    border: 2px solid red;
+}
+
+.float-child {
+    width: 30%;
+    float: center;
+    padding: 30px;
+}
+
+.btnBorder {
+    border: 5px black;
+}
+
 .btnSize {
     width: 85px !important;
 }
