@@ -1,9 +1,11 @@
 def check_input(username, password):
+    if len(username) < 3 or len(username) > 20 or len(password) < 3:
+        return False
     for char in username:
-        if char == " " or len(username) < 3 or len(username) > 20:
+        if char == " ":
             return False
     for char in password:
-        if char == " " or len(password) < 3:
+        if char == " ":
             return False
     return True
 
