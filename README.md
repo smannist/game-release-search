@@ -4,7 +4,7 @@ The application allows the user to search for the latest video game releases on 
 
 ## Features
 
-- The user can create a new account, which can then be used to log in to the application
+- The user can create a new account, which can then be used to sign in to the application
 - The user will be able to see a list of all available platforms
 - By selecting a platform the user will be able to preview all upcoming video game releases on that platform
 - The user can view additional information about the game (release date, synopsis, etc.)
@@ -16,6 +16,17 @@ The application allows the user to search for the latest video game releases on 
 
 ## Current state and testing the application
 
-Currently it's possible for the user to sign up, sign in, sign out and view platform selection.
+Currently working features:
+
+- User sign in / out and sign up
+- User can view platforms list
+- User can view games list
+- User can rate games
+- User can see a list of games they have previously rated (My ratings)
+
+TODO:
+
+- Roles
+- Admin features
 
 The application can be tested at [Heroku](https://game-release-search.herokuapp.com/).
