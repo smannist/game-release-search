@@ -1,4 +1,3 @@
-from unittest import result
 from flask import Flask, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from db import db

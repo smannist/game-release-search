@@ -1,4 +1,3 @@
-from pickle import TRUE
 from flask import Flask
 from db import db
 
@@ -32,9 +31,9 @@ def rate_game(rating,user_id,game_id):
       sql_insert = "INSERT INTO ratings (rating,user_id,game_id) \
             SELECT :rating,:user_id,:game_id WHERE NOT EXISTS (SELECT user_id,game_id FROM ratings \
             WHERE user_id=:user_id AND game_id=:game_id)"
+      sql_update = "UPDATE ratings SET rating=:rating WHERE user_id=:user_id AND game_id=:game_id"
       db.session.execute(sql_insert, {"rating":rating, "user_id":user_id, "game_id":game_id})
       db.session.commit()
-      sql_update = "UPDATE ratings SET rating=:rating WHERE user_id=:user_id AND game_id=:game_id"
       db.session.execute(sql_update, {"rating":rating,"user_id":user_id, "game_id":game_id})
       db.session.commit()
 
