@@ -28,6 +28,7 @@ TODO:
 
 - Roles
 - Admin features
+- Confirmation message to the user after succesfully rated game
 
 If time:
 
