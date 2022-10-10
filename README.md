@@ -29,4 +29,8 @@ TODO:
 - Roles
 - Admin features
 
+If time:
+
+- Find a way to improve UI
+
 The application can be tested at [Heroku](https://game-release-search.herokuapp.com/).
