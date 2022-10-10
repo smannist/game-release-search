@@ -19,14 +19,14 @@
         {% for all_ratings in all_ratings %}
           {% if games.id == all_ratings.game_id %}
       <div class="col">{{ all_ratings.rating }}</div>
-      <div class="col">
+        <div class="col">
         <form action="/platforms/{{ platform }}/games" method="POST">
-          <input type="radio" name="rating_info" value="0,{{ games.id }}">
-          <input type="radio" name="rating_info" value="1,{{ games.id }}">
-          <input type="radio" name="rating_info" value="2,{{ games.id }}">
-          <input type="radio" name="rating_info" value="3,{{ games.id }}">
-          <input type="radio" name="rating_info" value="4,{{ games.id }}">
-          <input type="radio" name="rating_info" value="5,{{ games.id }}">
+          0<input type="radio" name="rating_info" value="0,{{ games.id }}">
+          1<input type="radio" name="rating_info" value="1,{{ games.id }}">
+          2<input type="radio" name="rating_info" value="2,{{ games.id }}">
+          3<input type="radio" name="rating_info" value="3,{{ games.id }}">
+          4<input type="radio" name="rating_info" value="4,{{ games.id }}">
+          5<input type="radio" name="rating_info" value="5,{{ games.id }}">
           <input type="submit" value="Confirm">
         </form>
       </div>
@@ -37,13 +37,13 @@
       <div class="col">Unrated</div>
       <div class="col">
         <div class="col">
-          <form action="/rate" method="POST">
-            <input type="radio" name="rating_info" value="0,{{ games.id }}">
-            <input type="radio" name="rating_info" value="1,{{ games.id }}">
-            <input type="radio" name="rating_info" value="2,{{ games.id }}">
-            <input type="radio" name="rating_info" value="3,{{ games.id }}">
-            <input type="radio" name="rating_info" value="4,{{ games.id }}">
-            <input type="radio" name="rating_info" value="5,{{ games.id }}">
+          <form action="/platforms/{{ platform }}/games" method="POST">
+            0<input type="radio" name="rating_info" value="0,{{ games.id }}">
+            1<input type="radio" name="rating_info" value="1,{{ games.id }}">
+            2<input type="radio" name="rating_info" value="2,{{ games.id }}">
+            3<input type="radio" name="rating_info" value="3,{{ games.id }}">
+            4<input type="radio" name="rating_info" value="4,{{ games.id }}">
+            5<input type="radio" name="rating_info" value="5,{{ games.id }}">
             <input type="submit" value="Confirm">
           </form>
         </div>

@@ -53,7 +53,7 @@ def games(platform):
         user_id = user.get_user_id(session["username"])
         game.set_rated_true(game_id)
         game.rate_game(rating, user_id, game_id)
-        return redirect("/platforms/{}/games".format(platform))
+        return redirect(f"/platforms/{platform}/games")
 
 @app.route("/image/<int:id>")
 def images(id):
