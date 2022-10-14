@@ -9,6 +9,8 @@
         <p>Wrong file type</p>
         {% endif %} {% if errorName %}
         <p>Platform name cannot contain only spaces</p>
+        {% endif %} {% if success %}
+        <p>Platform added successfully!</p>
         {% endif %}
         <form
           action="/adminportal/manageplatforms"

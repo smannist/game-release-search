@@ -91,7 +91,7 @@ def manage_platforms():
                     return render_template("manageplatforms.html", errorName=True)
             if util.validate_img_type(file) and len(image) < 100*1024:
                 platform.add_platform(name, image)
-                return redirect("/adminportal/manageplatforms")
+                return render_template("manageplatforms.html", success=True)
             else:
                 return render_template("manageplatforms.html", errorFile=True)
     return render_template("restrict.html")
