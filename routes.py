@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, session, make_response
+from flask import render_template, redirect, request, session, make_response, flash
 from app import app
 from services import user, platform, game
 from utils import util
@@ -77,21 +77,32 @@ def admin_portal():
         return render_template("adminportal.html")
     return render_template("restrict.html")
 
-@app.route("/adminportal/manageplatforms", methods=["GET", "POST"])
+@app.route("/adminportal/manageplatforms")
 def manage_platforms():
     if user.is_admin():
-        if request.method == "GET":
-                return render_template("manageplatforms.html")
-        if request.method == "POST":
-            user.check_csrf()
-            name = request.form["name"]
-            file = request.files["file"]
-            image = file.read()
-            if name.isspace():
-                    return render_template("manageplatforms.html", errorName=True)
-            if util.validate_img_type(file) and len(image) < 100*1024:
-                platform.add_platform(name, image)
-                return render_template("manageplatforms.html", success=True)
-            else:
-                return render_template("manageplatforms.html", errorFile=True)
+        platforms = platform.get_platform()
+        return render_template("manageplatforms.html", platforms=platforms)
     return render_template("restrict.html")
+
+@app.route("/addplatform", methods=["POST"])
+def add_platform():
+    user.check_csrf()
+    platforms = platform.get_platform()
+    name = request.form["name"]
+    file = request.files["file"]
+    image = file.read()
+    if name.isspace():
+        return render_template("manageplatforms.html", platforms=platforms, errorName=True)
+    if util.validate_img_type(file) and len(image) < 100*1024:
+        platform.add_platform(name, image)
+        return render_template("manageplatforms.html", platforms=platforms, add=True)
+    else:
+        return render_template("manageplatforms.html", platforms=platforms, errorFile=True)
+
+@app.route("/deleteplatform", methods=["POST"])
+def delete_platform():
+    user.check_csrf()
+    id = request.form["id"]
+    platform.delete_platform(id)
+    flash("Platform deleted successfully!")
+    return redirect("/adminportal/manageplatforms")

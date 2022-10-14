@@ -20,13 +20,13 @@ CREATE TABLE IF NOT EXISTS games (
     title TEXT UNIQUE,
     synopsis TEXT,
     release_date DATE,
-    platform_id INT REFERENCES platforms(id),
+    platform_id INT REFERENCES platforms(id) ON DELETE CASCADE,
     israted BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS ratings (
     id SERIAL PRIMARY KEY,
     rating INT,
-    user_id INT REFERENCES users(id),
-    game_id INT REFERENCES games(id)
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    game_id INT REFERENCES games(id) ON DELETE CASCADE
 );

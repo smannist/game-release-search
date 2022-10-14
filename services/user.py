@@ -36,8 +36,8 @@ def is_admin():
         user_id = session["user_id"]
         sql = "SELECT role FROM roles WHERE user_id=:user_id"
         result = db.session.execute(sql, {"user_id":user_id})
-        get_role = result.fetchone()[0]
-        if get_role == "admin":
+        role = result.fetchone()[0]
+        if role == "admin":
             return True
     except:
         return False

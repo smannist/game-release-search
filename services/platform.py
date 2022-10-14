@@ -15,3 +15,8 @@ def add_platform(name, image):
     sql = "INSERT INTO platforms (name, image) VALUES (:name, :image)"
     db.session.execute(sql, {"name":name, "image":image})
     db.session.commit()
+
+def delete_platform(id):
+    sql = "DELETE FROM platforms WHERE id=:id"
+    db.session.execute(sql, {"id":id})
+    db.session.commit()

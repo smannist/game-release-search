@@ -19,8 +19,14 @@
     max-width: 30% !important;
 }
 
-.platforms-width {
+.platforms-add {
     max-width: 20% !important;
+    height: 300px;
+}
+
+.platforms-remove {
+    max-width: 25% !important;
+    height: 300px;
 }
 
 .platforms-margin {
