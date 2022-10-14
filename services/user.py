@@ -26,15 +26,10 @@ def validate_user(username, password):
         hash_value = user.password
         if check_password_hash(hash_value, password):
             session["username"] = username
+            session["user_id"] = user.id
             session["csrf_token"] = secrets.token_hex(16)
             return True
     return False
-
-def get_user_id(username):
-    sql = "SELECT id FROM users WHERE username=:username"
-    result = db.session.execute(sql, {"username":username})
-    id = result.fetchone()[0]
-    return id
 
 def check_csrf():
     if session["csrf_token"] != request.form["csrf_token"]:

@@ -50,7 +50,7 @@ def games(platform):
         rating_info = util.string_to_list(request.form["rating_info"])
         rating = rating_info[0]
         game_id = rating_info[1]
-        user_id = user.get_user_id(session["username"])
+        user_id = session["user_id"]
         game.set_rated_true(game_id)
         game.rate_game(rating, user_id, game_id)
         return redirect(f"/platforms/{platform}/games")
