@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
     password TEXT
 );
 
-CREATE TABLE IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS roles (
     role TEXT UNIQUE,
     user_id INT REFERENCES users(id)
 )
