@@ -10,6 +10,28 @@
     padding: 20px;
 }
 
+.admin-jumbotron {
+    width: 1500px;
+    margin: 0 auto;
+}
+
+.games-width {
+    max-width: 30% !important;
+}
+
+.platforms-width {
+    max-width: 20% !important;
+}
+
+.platforms-margin {
+    margin-bottom: 20px;
+}
+
+.margin-admin {
+    margin-right: 200px;
+    margin-left: 200px
+}
+
 .setBorder {
     border: 2px solid red;
 }
@@ -52,4 +74,8 @@ h1 {
     font-family: Rockwell, "Courier Bold", sans-serif;
     margin-bottom: 60px;
     text-align: center;
+}
+
+a {
+    text-decoration: None;
 }

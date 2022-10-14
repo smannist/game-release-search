@@ -21,6 +21,8 @@ def signin():
 @app.route("/signout")
 def signout():
     del session["username"]
+    del session["csrf_token"]
+    del session["user_id"]
     return redirect("/")
 
 @app.route("/signup", methods=["POST", "GET"])
@@ -67,4 +69,29 @@ def myratings(username):
     if session["username"] == username:
         user_ratings = game.get_user_rated_games(username)
         return render_template("myratings.html", user_ratings=user_ratings)
+    return render_template("restrict.html")
+
+@app.route("/adminportal")
+def admin_portal():
+    if user.is_admin():
+        return render_template("adminportal.html")
+    return render_template("restrict.html")
+
+@app.route("/adminportal/manageplatforms", methods=["GET", "POST"])
+def manage_platforms():
+    if user.is_admin():
+        if request.method == "GET":
+                return render_template("manageplatforms.html")
+        if request.method == "POST":
+            user.check_csrf()
+            name = request.form["name"]
+            file = request.files["file"]
+            image = file.read()
+            if name.isspace():
+                    return render_template("manageplatforms.html", errorName=True)
+            if util.validate_img_type(file) and len(image) < 100*1024:
+                platform.add_platform(name, image)
+                return redirect("/adminportal/manageplatforms")
+            else:
+                return render_template("manageplatforms.html", errorFile=True)
     return render_template("restrict.html")

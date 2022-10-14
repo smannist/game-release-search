@@ -1,11 +1,11 @@
-from flask import Flask, session, abort, request
 import secrets
+from flask import Flask, session, abort, request
 from werkzeug.security import generate_password_hash, check_password_hash
 from db import db
 from utils import util
 
 def create_user(username, password):
-    if util.check_input(username, password):
+    if util.check_user(username, password):
         hash_value = generate_password_hash(password)
         try:
             sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
@@ -29,6 +29,18 @@ def validate_user(username, password):
             session["user_id"] = user.id
             session["csrf_token"] = secrets.token_hex(16)
             return True
+    return False
+
+def is_admin():
+    try:
+        user_id = session["user_id"]
+        sql = "SELECT role FROM roles WHERE user_id=:user_id"
+        result = db.session.execute(sql, {"user_id":user_id})
+        get_role = result.fetchone()[0]
+        if get_role == "admin":
+            return True
+    except:
+        return False
     return False
 
 def check_csrf():

@@ -10,3 +10,8 @@ def get_platform():
     sql = "SELECT id, name FROM platforms"
     result = db.session.execute(sql)
     return result.fetchall()
+
+def add_platform(name, image):
+    sql = "INSERT INTO platforms (name, image) VALUES (:name, :image)"
+    db.session.execute(sql, {"name":name, "image":image})
+    db.session.commit()
