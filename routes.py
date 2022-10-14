@@ -15,7 +15,6 @@ def signin():
         username = request.form["username"]
         password = request.form["password"]
         if user.validate_user(username, password):
-            session["username"] = username
             return redirect("/platforms")
         return render_template("signin.html", error=True)
 
@@ -47,6 +46,7 @@ def games(platform):
         all_ratings = game.get_rating_info()
         return render_template("games.html", games=games, all_ratings=all_ratings, platform=platform)
     if request.method == "POST":
+        user.check_csrf()
         rating_info = util.string_to_list(request.form["rating_info"])
         rating = rating_info[0]
         game_id = rating_info[1]

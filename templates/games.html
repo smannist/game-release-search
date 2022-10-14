@@ -28,6 +28,7 @@
           4<input type="radio" name="rating_info" value="4,{{ games.id }}">
           5<input type="radio" name="rating_info" value="5,{{ games.id }}">
           <input type="submit" value="Confirm">
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
       </div>
           {% endif %}
@@ -45,6 +46,7 @@
             4<input type="radio" name="rating_info" value="4,{{ games.id }}">
             5<input type="radio" name="rating_info" value="5,{{ games.id }}">
             <input type="submit" value="Confirm">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
           </form>
         </div>
       </div>

@@ -1,4 +1,5 @@
-from flask import Flask, session
+from flask import Flask, session, abort, request
+import secrets
 from werkzeug.security import generate_password_hash, check_password_hash
 from db import db
 from utils import util
@@ -25,6 +26,7 @@ def validate_user(username, password):
         hash_value = user.password
         if check_password_hash(hash_value, password):
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return True
     return False
 
@@ -33,3 +35,7 @@ def get_user_id(username):
     result = db.session.execute(sql, {"username":username})
     id = result.fetchone()[0]
     return id
+
+def check_csrf():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
