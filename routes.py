@@ -69,20 +69,20 @@ def myratings(username):
     if session["username"] == username:
         user_ratings = game.get_user_rated_games(username)
         return render_template("myratings.html", user_ratings=user_ratings)
-    return render_template("restrict.html")
+    return render_template("unauthorized.html")
 
 @app.route("/adminportal")
 def admin_portal():
     if user.is_admin():
         return render_template("adminportal.html")
-    return render_template("restrict.html")
+    return render_template("unauthorized.html")
 
 @app.route("/adminportal/manageplatforms")
 def manage_platforms():
     if user.is_admin():
         platforms = platform.get_platform()
         return render_template("manageplatforms.html", platforms=platforms)
-    return render_template("restrict.html")
+    return render_template("unauthorized.html")
 
 @app.route("/addplatform", methods=["POST"])
 def add_platform():
