@@ -31,6 +31,41 @@
       </div>
     </div>
   </div>
+  <div class="container platforms-edit">
+    <div class="row">
+      <div class="col">
+        <h1>Edit platform</h1>
+        <form
+          action="/editplatform"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          Platform to edit:
+          <select class="p-select-margin" name="id_edit" id="id_edit">
+            {% for platform in platforms %}
+            <option value="{{ platform.id }}" name="id_edit">
+              {{ platform[1] }}
+            </option>
+            {% endfor %}
+          </select>
+          <div class="form-outline mb-4">
+            <input class="form-control" type="text" name="name_edit" required />
+            <label class="form-label" for="name">Platform name</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input class="form-control" type="file" name="file_edit" required />
+            <label class="form-label" for="file">Platform image</label>
+          </div>
+          <input type="submit" value="Confirm" />
+          <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ session.csrf_token }}"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
   <div class="container platforms-remove">
     <div class="row">
       <div class="col">

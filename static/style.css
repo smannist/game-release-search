@@ -24,9 +24,18 @@
     height: 300px;
 }
 
+.platforms-edit {
+    max-width: 20% !important;
+    height: 300px;
+}
+
 .platforms-remove {
     max-width: 25% !important;
     height: 300px;
+}
+
+.p-select-margin {
+    margin-bottom: 10px;
 }
 
 .platforms-margin {

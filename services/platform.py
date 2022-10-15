@@ -20,3 +20,8 @@ def delete_platform(id):
     sql = "DELETE FROM platforms WHERE id=:id"
     db.session.execute(sql, {"id":id})
     db.session.commit()
+
+def edit_platform(name, image, id):
+    sql = "UPDATE platforms SET name=:name, image=:image WHERE id=:id"
+    db.session.execute(sql, {"name":name, "image":image, "id":id})
+    db.session.commit()

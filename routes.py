@@ -106,3 +106,17 @@ def delete_platform():
     platform.delete_platform(id)
     flash("Platform deleted successfully!")
     return redirect("/adminportal/manageplatforms")
+
+@app.route("/editplatform", methods=["POST"])
+def edit_platform():
+    user.check_csrf()
+    name = request.form["name_edit"]
+    file = request.files["file_edit"]
+    id = request.form["id_edit"]
+    image = file.read()
+    if name.isspace():
+        return redirect("/adminportal/manageplatforms")
+    if util.validate_img_type(file) and len(image) < 100*1024:
+        platform.edit_platform(name, image, id)
+        return redirect("/adminportal/manageplatforms")
+    return redirect("/adminportal/manageplatforms")    
