@@ -22,16 +22,18 @@ Currently working features:
 - User can view platforms list
 - User can view games list
 - User can rate games
-- User can see a list of games they have previously rated (My ratings)
+- User can see a list of games they have previously rated (My Ratings)
+- Admin can edit, add, remove platforms and games
 
 TODO:
 
-- Roles
-- Admin features
-- Confirmation message to the user after succesfully rated game
+- Game rating deletion
+- Tons of confirmation messages
 
 If time:
 
 - Find a way to improve UI
+- Use pylint to improve code quality
+- General clean up
 
 The application can be tested at [Heroku](https://game-release-search.herokuapp.com/).

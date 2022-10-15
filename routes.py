@@ -152,6 +152,7 @@ def edit_game():
 
 @app.route("/deletegame", methods=["POST"])
 def delete_game():
+    user.check_csrf()
     id = request.form["id_delete"]
     game.delete_game(id)
     return redirect("/adminportal/managegamerating")
