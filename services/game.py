@@ -41,3 +41,25 @@ def set_rated_true(game_id):
       sql = "UPDATE games SET israted=TRUE WHERE id=:game_id"
       db.session.execute(sql, {"game_id":game_id})
       db.session.commit()
+
+def get_all_games():
+      sql = "SELECT id,title FROM games"
+      result = db.session.execute(sql)
+      return result.fetchall()
+
+def add_game(title,synopsis,release_date,platform_id):
+      sql = "INSERT INTO games (title,synopsis,release_date,platform_id) \
+             VALUES (:title,:synopsis,:release_date,:platform_id)"
+      db.session.execute(sql, {"title":title, "synopsis":synopsis, "release_date":release_date, "platform_id":platform_id})
+      db.session.commit()
+
+def edit_game(title,synopsis,release_date,platform_id,game_id):
+      sql = "UPDATE games SET title=:title, synopsis=:synopsis, release_date=:release_date, platform_id=:platform_id, id=:game_id \
+             WHERE id=:game_id"
+      db.session.execute(sql, {"title":title, "synopsis":synopsis, "release_date":release_date, "platform_id":platform_id, "game_id":game_id})
+      db.session.commit()
+
+def delete_game(id):
+      sql = "DELETE FROM games WHERE id=:id"
+      db.session.execute(sql, {"id":id})
+      db.session.commit()

@@ -1,0 +1,139 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="admin-jumbotron vertical-center">
+  <div class="container platforms-add">
+    <div class="row">
+      <div class="col">
+        <h1>Add game</h1>
+        <form action="/addgame" method="POST">
+          <div>
+            Platform
+            <select class="p-select-margin" name="id_p_add" id="id_p_add">
+              {% for platform in platforms %}
+              <option value="{{ platform.id }}" name="id_p_add">
+                {{ platform[1] }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-outline mb-4">
+            <input class="form-control" type="text" name="title_add" required />
+            <label class="form-label" for="name">Title</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input
+              class="form-control"
+              type="text"
+              name="synopsis_add"
+              required
+            />
+            <label class="form-label" for="name">Synopsis</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input
+              class="form-control"
+              type="text"
+              name="release_add"
+              required
+            />
+            <label class="form-label" for="name"
+              >Release date (YYYY-MM-DD)
+            </label>
+          </div>
+          <input type="submit" value="Confirm" />
+          <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ session.csrf_token }}"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container platforms-edit">
+    <div class="row">
+      <div class="col">
+        <h1>Edit game</h1>
+        <form action="/editgame" method="POST">
+          Choose game:
+          <select class="p-select-margin" name="id_g_edit" id="id_g_edit">
+            {% for game in games %}
+            <option value="{{ game.id }}" name="id_g_edit">
+              {{ game[1] }}
+            </option>
+            {% endfor %}
+          </select>
+          <div>
+            Choose platform:
+            <select class="p-select-margin" name="id_p_edit" id="id_p_edit">
+              {% for platform in platforms %}
+              <option value="{{ platform.id }}" name="id_p_edit">
+                {{ platform[1] }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-outline mb-4">
+            <input
+              class="form-control"
+              type="text"
+              name="title_edit"
+              required
+            />
+            <label class="form-label" for="name">Title</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input
+              class="form-control"
+              type="text"
+              name="synopsis_edit"
+              required
+            />
+            <label class="form-label" for="name">Synopsis</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input
+              class="form-control"
+              type="text"
+              name="release_edit"
+              required
+            />
+            <label class="form-label" for="name"
+              >Release date (YYYY-MM-DD)</label
+            >
+          </div>
+          <input type="submit" value="Confirm" />
+          <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ session.csrf_token }}"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container platforms-remove">
+    <div class="row">
+      <div class="col">
+        <h1>Delete game</h1>
+        <form action="/deletegame" method="POST">
+          <select name="id_delete" id="id_delete">
+            {% for game in games %}
+            <option value="{{ game.id }}" name="id_delete">
+              {{ game[1] }}
+            </option>
+            {% endfor %}
+          </select>
+          <input type="submit" value="Confirm" />
+          <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ session.csrf_token }}"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

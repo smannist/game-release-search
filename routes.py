@@ -119,4 +119,39 @@ def edit_platform():
     if util.validate_img_type(file) and len(image) < 100*1024:
         platform.edit_platform(name, image, id)
         return redirect("/adminportal/manageplatforms")
-    return redirect("/adminportal/manageplatforms")    
+    return redirect("/adminportal/manageplatforms")
+
+@app.route("/adminportal/managegamerating")
+def managegamerating():
+    if user.is_admin():
+        platforms = platform.get_platform()
+        games = game.get_all_games()
+        return render_template("managegamerating.html", platforms=platforms, games=games)
+    return render_template("unauthorized.html")
+
+@app.route("/addgame", methods=["POST"])
+def add_game():
+    user.check_csrf()
+    platform_id = request.form["id_p_add"]
+    title = request.form["title_add"]
+    synopsis = request.form["synopsis_add"]
+    release_date = request.form["release_add"]
+    game.add_game(title,synopsis,release_date,platform_id)
+    return redirect("/adminportal/managegamerating")
+
+@app.route("/editgame", methods=["POST"])
+def edit_game():
+    user.check_csrf()
+    game_id = request.form["id_g_edit"]
+    platform_id = request.form["id_p_edit"]
+    title = request.form["title_edit"]
+    synopsis = request.form["synopsis_edit"]
+    release_date = request.form["release_edit"]
+    game.edit_game(title,synopsis,release_date,platform_id,game_id)
+    return redirect("/adminportal/managegamerating")
+
+@app.route("/deletegame", methods=["POST"])
+def delete_game():
+    id = request.form["id_delete"]
+    game.delete_game(id)
+    return redirect("/adminportal/managegamerating")
