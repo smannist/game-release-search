@@ -38,7 +38,7 @@ def signup():
 
 @app.route("/platforms")
 def platforms():
-    platforms = platform.get_platform()
+    platforms = platform.get_platform_info()
     return render_template("platforms.html", platforms=platforms)
 
 @app.route("/platforms/<string:platform>/games", methods=["GET", "POST"])
@@ -80,31 +80,34 @@ def admin_portal():
 @app.route("/adminportal/manageplatforms")
 def manage_platforms():
     if user.is_admin():
-        platforms = platform.get_platform()
+        platforms = platform.get_platform_info()
         return render_template("manageplatforms.html", platforms=platforms)
     return render_template("unauthorized.html")
 
 @app.route("/addplatform", methods=["POST"])
 def add_platform():
     user.check_csrf()
-    platforms = platform.get_platform()
     name = request.form["name"]
     file = request.files["file"]
     image = file.read()
     if name.isspace():
-        return render_template("manageplatforms.html", platforms=platforms, errorName=True)
+        flash("Platform name cannot contain only spaces", "add")
+        return redirect("/adminportal/manageplatforms")
     if util.validate_img_type(file) and len(image) < 100*1024:
         platform.add_platform(name, image)
-        return render_template("manageplatforms.html", platforms=platforms, add=True)
+        flash(f"Platform {name} added successfully!", "add")
+        return redirect("/adminportal/manageplatforms")
     else:
-        return render_template("manageplatforms.html", platforms=platforms, errorFile=True)
+        flash("Something went wrong", "add")
+        return redirect("/adminportal/manageplatforms")
 
 @app.route("/deleteplatform", methods=["POST"])
 def delete_platform():
     user.check_csrf()
     id = request.form["id"]
+    target_platform = platform.get_platform(id)
     platform.delete_platform(id)
-    flash("Platform deleted successfully!")
+    flash(f"Platform {target_platform} deleted successfully!", "delete")
     return redirect("/adminportal/manageplatforms")
 
 @app.route("/editplatform", methods=["POST"])
@@ -114,17 +117,21 @@ def edit_platform():
     file = request.files["file_edit"]
     id = request.form["id_edit"]
     image = file.read()
+    target_platform = platform.get_platform(id)
     if name.isspace():
+        flash("Platform name cannot contain only spaces", "edit")
         return redirect("/adminportal/manageplatforms")
     if util.validate_img_type(file) and len(image) < 100*1024:
         platform.edit_platform(name, image, id)
+        flash(f"Platform {target_platform} edited successfully!", "edit")
         return redirect("/adminportal/manageplatforms")
-    return redirect("/adminportal/manageplatforms")
+    flash("Something went wrong")
+    return redirect("/adminportal/manageplatforms", "edit")
 
 @app.route("/adminportal/managegamerating")
 def managegamerating():
     if user.is_admin():
-        platforms = platform.get_platform()
+        platforms = platform.get_platform_info()
         games = game.get_all_games()
         return render_template("managegamerating.html", platforms=platforms, games=games)
     return render_template("unauthorized.html")
@@ -137,6 +144,7 @@ def add_game():
     synopsis = request.form["synopsis_add"]
     release_date = request.form["release_add"]
     game.add_game(title,synopsis,release_date,platform_id)
+    flash(f"Game {title} added successfully!", "add")
     return redirect("/adminportal/managegamerating")
 
 @app.route("/editgame", methods=["POST"])
@@ -147,12 +155,16 @@ def edit_game():
     title = request.form["title_edit"]
     synopsis = request.form["synopsis_edit"]
     release_date = request.form["release_edit"]
+    target_game = game.get_game(game_id)
     game.edit_game(title,synopsis,release_date,platform_id,game_id)
+    flash(f"Game {target_game} edited successfully!", "edit")
     return redirect("/adminportal/managegamerating")
 
 @app.route("/deletegame", methods=["POST"])
 def delete_game():
     user.check_csrf()
     id = request.form["id_delete"]
+    target_game = game.get_game(id)
     game.delete_game(id)
+    flash(f"Game {target_game} deleted successfully!", "delete")
     return redirect("/adminportal/managegamerating")

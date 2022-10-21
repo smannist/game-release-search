@@ -19,8 +19,6 @@ def validate_img_type(image):
     name = image.filename
     regex = "([^\\s]+(\\.(?i)(jpe?g|png))$)"
     comp = re.compile(regex)
-    if name == None:
-        return False
     if re.search(comp, name):
         return True
     return False

@@ -1,4 +1,3 @@
-from flask import Flask
 from db import db
 
 def get_platform_image(id):
@@ -6,10 +5,15 @@ def get_platform_image(id):
     result = db.session.execute(sql, {"id":id})
     return result.fetchone()[0]
 
-def get_platform():
+def get_platform_info():
     sql = "SELECT id, name FROM platforms"
     result = db.session.execute(sql)
     return result.fetchall()
+
+def get_platform(id):
+    sql = "SELECT name FROM platforms WHERE id=:id"
+    result = db.session.execute(sql, {"id":id})
+    return result.fetchone()[0]
 
 def add_platform(name, image):
     sql = "INSERT INTO platforms (name, image) VALUES (:name, :image)"
@@ -25,3 +29,4 @@ def edit_platform(name, image, id):
     sql = "UPDATE platforms SET name=:name, image=:image WHERE id=:id"
     db.session.execute(sql, {"name":name, "image":image, "id":id})
     db.session.commit()
+    

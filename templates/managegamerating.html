@@ -5,6 +5,10 @@
     <div class="row">
       <div class="col">
         <h1>Add game</h1>
+        {% with messages = get_flashed_messages(category_filter=["add"]) %} {%
+        if messages %} {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %} {% endif %} {% endwith %}
         <form action="/addgame" method="POST">
           <div>
             Platform
@@ -54,6 +58,10 @@
     <div class="row">
       <div class="col">
         <h1>Edit game</h1>
+        {% with messages = get_flashed_messages(category_filter=["edit"]) %} {%
+        if messages %} {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %} {% endif %} {% endwith %}
         <form action="/editgame" method="POST">
           Choose game:
           <select class="p-select-margin" name="id_g_edit" id="id_g_edit">
@@ -116,6 +124,10 @@
     <div class="row">
       <div class="col">
         <h1>Delete game</h1>
+        {% with messages = get_flashed_messages(category_filter=["delete"]) %}
+        {% if messages %} {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %} {% endif %} {% endwith %}
         <form action="/deletegame" method="POST">
           <select name="id_delete" id="id_delete">
             {% for game in games %}

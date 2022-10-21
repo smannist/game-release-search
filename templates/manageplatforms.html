@@ -5,13 +5,10 @@
     <div class="row">
       <div class="col">
         <h1>Add platform</h1>
-        {% if errorFile %}
-        <p>Wrong file type</p>
-        {% endif %} {% if errorName %}
-        <p>Platform name cannot contain only spaces</p>
-        {% endif %} {% if add %}
-        <p>Platform added successfully!</p>
-        {% endif %}
+        {% with messages = get_flashed_messages(category_filter=["add"]) %} {%
+        if messages %} {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %} {% endif %} {% endwith %}
         <form action="/addplatform" method="POST" enctype="multipart/form-data">
           <div class="form-outline mb-4">
             <input class="form-control" type="text" name="name" required />
@@ -35,6 +32,10 @@
     <div class="row">
       <div class="col">
         <h1>Edit platform</h1>
+        {% with messages = get_flashed_messages(category_filter=["edit"]) %} {%
+        if messages %} {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %} {% endif %} {% endwith %}
         <form
           action="/editplatform"
           method="POST"
@@ -70,8 +71,8 @@
     <div class="row">
       <div class="col">
         <h1>Delete platform</h1>
-        {% with messages = get_flashed_messages() %} {% if messages %} {% for
-        message in messages %}
+        {% with messages = get_flashed_messages(category_filter=["delete"]) %}
+        {% if messages %} {% for message in messages %}
         <p>{{message}}</p>
         {% endfor %} {% endif %} {% endwith %}
         <form action="/deleteplatform" method="POST">
