@@ -23,6 +23,11 @@
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="/{{ session.username }}/myratings">My Ratings</a>
                 </li>
+                {% if admin %}
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/adminportal">Admin portal</a>
+                </li>
+                {% endif %}
             <ul class="navbar-nav position-absolute end-0 mx-3">
               <li class="nav-item">
                   <a class="nav-link ms-auto">You are signed in as {{ session.username }}</a>

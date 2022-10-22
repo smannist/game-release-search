@@ -5,7 +5,8 @@ from utils import util
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    is_admin = user.is_admin()
+    return render_template("index.html", admin=is_admin)
 
 @app.route("/signin", methods=["POST", "GET"])
 def signin():
@@ -38,15 +39,17 @@ def signup():
 
 @app.route("/platforms")
 def platforms():
+    is_admin = user.is_admin()
     platforms = platform.get_platform_info()
-    return render_template("platforms.html", platforms=platforms)
+    return render_template("platforms.html", platforms=platforms, admin=is_admin)
 
 @app.route("/platforms/<string:platform>/games", methods=["GET", "POST"])
 def games(platform):
+    is_admin = user.is_admin()
     if request.method == "GET":
         games = game.get_game_info(platform)
         all_ratings = game.get_rating_info()
-        return render_template("games.html", games=games, all_ratings=all_ratings, platform=platform)
+        return render_template("games.html", games=games, all_ratings=all_ratings, platform=platform, admin=is_admin)
     if request.method == "POST":
         user.check_csrf()
         rating_info = util.string_to_list(request.form["rating_info"])
@@ -66,22 +69,25 @@ def images(id):
 
 @app.route("/<string:username>/myratings")
 def myratings(username):
+    is_admin = user.is_admin()
     if session["username"] == username:
         user_ratings = game.get_user_rated_games(username)
-        return render_template("myratings.html", user_ratings=user_ratings)
+        return render_template("myratings.html", user_ratings=user_ratings, admin=is_admin)
     return render_template("unauthorized.html")
 
 @app.route("/adminportal")
 def admin_portal():
+    is_admin = user.is_admin()
     if user.is_admin():
-        return render_template("adminportal.html")
+        return render_template("adminportal.html", admin=is_admin)
     return render_template("unauthorized.html")
 
 @app.route("/adminportal/manageplatforms")
 def manage_platforms():
+    is_admin = user.is_admin()
     if user.is_admin():
         platforms = platform.get_platform_info()
-        return render_template("manageplatforms.html", platforms=platforms)
+        return render_template("manageplatforms.html", platforms=platforms, admin=is_admin)
     return render_template("unauthorized.html")
 
 @app.route("/addplatform", methods=["POST"])
@@ -130,10 +136,11 @@ def edit_platform():
 
 @app.route("/adminportal/managegamerating")
 def managegamerating():
+    is_admin = user.is_admin()
     if user.is_admin():
         platforms = platform.get_platform_info()
         games = game.get_all_games()
-        return render_template("managegamerating.html", platforms=platforms, games=games)
+        return render_template("managegamerating.html", platforms=platforms, games=games, admin=is_admin)
     return render_template("unauthorized.html")
 
 @app.route("/addgame", methods=["POST"])
