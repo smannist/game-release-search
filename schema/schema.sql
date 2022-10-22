@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS platforms (
 
 CREATE TABLE IF NOT EXISTS games (
     id SERIAL PRIMARY KEY,
-    title TEXT UNIQUE,
+    title TEXT,
     synopsis TEXT,
     release_date DATE,
     platform_id INT REFERENCES platforms(id) ON DELETE CASCADE,

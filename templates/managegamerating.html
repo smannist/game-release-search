@@ -130,9 +130,9 @@
         {% endfor %} {% endif %} {% endwith %}
         <form action="/deletegame" method="POST">
           <select name="id_delete" id="id_delete">
-            {% for game in games %}
+            {% for game in games2 %}
             <option value="{{ game.id }}" name="id_delete">
-              {{ game[1] }}
+              {{ game[1] }} ({{ game[2] }})
             </option>
             {% endfor %}
           </select>

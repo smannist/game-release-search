@@ -1,3 +1,4 @@
+from datetime import datetime
 import re
 
 def check_user(username, password):
@@ -22,3 +23,10 @@ def validate_img_type(image):
     if re.search(comp, name):
         return True
     return False
+
+def validate_date(release_date):
+    try:
+        datetime.strptime(release_date, "%Y-%m-%d")
+        return True
+    except:
+        return False

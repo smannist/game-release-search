@@ -42,8 +42,15 @@ def set_rated_true(game_id):
     db.session.execute(sql, {"game_id":game_id})
     db.session.commit()
 
-def get_all_games():
-    sql = "SELECT id,title FROM games"
+def get_distinct_games():
+    sql = "SELECT MAX(id) AS id, MAX(title) AS title FROM games GROUP BY title"
+    result = db.session.execute(sql)
+    return result.fetchall()
+
+def games_by_platform():
+    sql = "SELECT games.id AS id,games.title,platforms.name FROM platforms \
+           INNER JOIN games ON games.platform_id=platforms.id \
+           WHERE games.platform_id=platforms.id"
     result = db.session.execute(sql)
     return result.fetchall()
 
@@ -54,7 +61,9 @@ def get_game(id):
 
 def add_game(title,synopsis,release_date,platform_id):
     sql = "INSERT INTO games (title,synopsis,release_date,platform_id) \
-           VALUES (:title,:synopsis,:release_date,:platform_id)"
+           SELECT :title,:synopsis,:release_date,:platform_id \
+           WHERE NOT EXISTS \
+           (SELECT title, platform_id FROM games WHERE title=:title AND platform_id=:platform_id)"
     db.session.execute(sql, {"title":title, "synopsis":synopsis, "release_date":release_date, "platform_id":platform_id})
     db.session.commit()
 

@@ -100,11 +100,15 @@ def add_platform():
         flash("Platform name cannot contain only spaces", "add")
         return redirect("/adminportal/manageplatforms")
     if util.validate_img_type(file) and len(image) < 100*1024:
-        platform.add_platform(name, image)
-        flash(f"Platform {name} added successfully!", "add")
-        return redirect("/adminportal/manageplatforms")
+        try: 
+            platform.add_platform(name, image)
+            flash(f"Platform {name} added successfully!", "add")
+            return redirect("/adminportal/manageplatforms")
+        except:
+            flash(f"Platform {name} already exists", "add")
+            return redirect("/adminportal/manageplatforms")
     else:
-        flash("Something went wrong", "add")
+        flash("Image size cannot be larger than 100 kB", "add")
         return redirect("/adminportal/manageplatforms")
 
 @app.route("/deleteplatform", methods=["POST"])
@@ -131,16 +135,17 @@ def edit_platform():
         platform.edit_platform(name, image, id)
         flash(f"Platform {target_platform} edited successfully!", "edit")
         return redirect("/adminportal/manageplatforms")
-    flash("Something went wrong")
-    return redirect("/adminportal/manageplatforms", "edit")
+    flash("Image size cannot be larger than 100 kB", "edit")
+    return redirect("/adminportal/manageplatforms")
 
 @app.route("/adminportal/managegamerating")
 def managegamerating():
     is_admin = user.is_admin()
     if user.is_admin():
         platforms = platform.get_platform_info()
-        games = game.get_all_games()
-        return render_template("managegamerating.html", platforms=platforms, games=games, admin=is_admin)
+        games = game.get_distinct_games()
+        games2 = game.games_by_platform()
+        return render_template("managegamerating.html", platforms=platforms, games=games, games2=games2, admin=is_admin)
     return render_template("unauthorized.html")
 
 @app.route("/addgame", methods=["POST"])
@@ -150,8 +155,14 @@ def add_game():
     title = request.form["title_add"]
     synopsis = request.form["synopsis_add"]
     release_date = request.form["release_add"]
+    if not util.validate_date(release_date):
+        flash(f"Date should be in YYYY-MM-DD format", "add")
+        return redirect("/adminportal/managegamerating")
+    if title.isspace() or synopsis.isspace() or release_date.isspace():
+        flash(f"Fields cannot contain only spaces", "add")
+        return redirect("/adminportal/managegamerating")
     game.add_game(title,synopsis,release_date,platform_id)
-    flash(f"Game {title} added successfully!", "add")
+    flash(f"Game {title} added successfully (if it did not already exist)!", "add")
     return redirect("/adminportal/managegamerating")
 
 @app.route("/editgame", methods=["POST"])
@@ -163,6 +174,12 @@ def edit_game():
     synopsis = request.form["synopsis_edit"]
     release_date = request.form["release_edit"]
     target_game = game.get_game(game_id)
+    if not util.validate_date(release_date):
+        flash(f"Date should be in YYYY-MM-DD format", "edit")
+        return redirect("/adminportal/managegamerating")
+    if title.isspace() or synopsis.isspace() or release_date.isspace():
+        flash(f"Fields cannot contain only spaces", "edit")
+        return redirect("/adminportal/managegamerating")
     game.edit_game(title,synopsis,release_date,platform_id,game_id)
     flash(f"Game {target_game} edited successfully!", "edit")
     return redirect("/adminportal/managegamerating")
