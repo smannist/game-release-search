@@ -4,9 +4,10 @@
   <div class="container d-flex justify-content-center">
     <form action="/signin" method="POST">
       <h1>Sign in</h1>
-      {% if error %}
-      <p>Invalid username or password.</p>
-      {% endif %}
+      {% with messages = get_flashed_messages(category_filter=["signin"]) %} {%
+      if messages %} {% for message in messages %}
+      <p>{{message}}</p>
+      {% endfor %} {% endif %} {% endwith %}
       <div class="form-outline mb-4">
         <input class="form-control" type="text" name="username" required />
         <label class="form-label" for="username">Username</label>

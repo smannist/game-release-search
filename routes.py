@@ -17,7 +17,8 @@ def signin():
         password = request.form["password"]
         if user.validate_user(username, password):
             return redirect("/platforms")
-        return render_template("signin.html", error=True)
+        flash("Invalid username or password", "signin")
+        return render_template("signin.html")
 
 @app.route("/signout")
 def signout():
@@ -35,6 +36,7 @@ def signup():
         password = request.form["password"]
         if user.create_user(username, password):
             return redirect("/signin")
+        flash("Username is already taken or invalid input", "signup")
         return render_template("signup.html", error=True)
 
 @app.route("/platforms")
