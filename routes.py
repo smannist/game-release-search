@@ -143,9 +143,10 @@ def managegamerating():
     is_admin = user.is_admin()
     if user.is_admin():
         platforms = platform.get_platform_info()
+        users = user.get_user_info()
         games = game.get_distinct_games()
         games2 = game.games_by_platform()
-        return render_template("managegamerating.html", platforms=platforms, games=games, games2=games2, admin=is_admin)
+        return render_template("managegamerating.html", users=users, platforms=platforms, games=games, games2=games2, admin=is_admin)
     return render_template("unauthorized.html")
 
 @app.route("/addgame", methods=["POST"])
@@ -155,6 +156,9 @@ def add_game():
     title = request.form["title_add"]
     synopsis = request.form["synopsis_add"]
     release_date = request.form["release_add"]
+    if len(synopsis) > 125:
+        flash(f"Synopsis should be no longer than 125 characters", "add")
+        return redirect("/adminportal/managegamerating")
     if not util.validate_date(release_date):
         flash(f"Date should be in YYYY-MM-DD format", "add")
         return redirect("/adminportal/managegamerating")
@@ -174,6 +178,9 @@ def edit_game():
     synopsis = request.form["synopsis_edit"]
     release_date = request.form["release_edit"]
     target_game = game.get_game(game_id)
+    if len(synopsis) > 125:
+        flash(f"Synopsis should be no longer than 125 characters", "edit")
+        return redirect("/adminportal/managegamerating")
     if not util.validate_date(release_date):
         flash(f"Date should be in YYYY-MM-DD format", "edit")
         return redirect("/adminportal/managegamerating")
@@ -191,4 +198,13 @@ def delete_game():
     target_game = game.get_game(id)
     game.delete_game(id)
     flash(f"Game {target_game} deleted successfully!", "delete")
+    return redirect("/adminportal/managegamerating")
+
+@app.route("/deleterating", methods=["POST"])
+def delete_rating():
+    user.check_csrf()
+    id = request.form["id_rating"]
+    target_user = user.get_user_by_id(id)
+    game.delete_ratings(id)
+    flash(f"Ratings by {target_user} deleted successfully!", "rating")
     return redirect("/adminportal/managegamerating")

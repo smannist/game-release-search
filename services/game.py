@@ -77,3 +77,8 @@ def delete_game(id):
     sql = "DELETE FROM games WHERE id=:id"
     db.session.execute(sql, {"id":id})
     db.session.commit()
+
+def delete_ratings(id):
+    sql = "DELETE FROM ratings WHERE user_id=:id"
+    db.session.execute(sql, {"id":id})
+    db.session.commit()

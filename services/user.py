@@ -43,6 +43,16 @@ def is_admin():
         return False
     return False
 
+def get_user_info():
+    sql = "SELECT id,username FROM users"
+    result = db.session.execute(sql)
+    return result.fetchall()
+
+def get_user_by_id(id):
+    sql = "SELECT username FROM users WHERE id=:id"
+    result = db.session.execute(sql, {"id":id})
+    return result.fetchone()[0]
+
 def check_csrf():
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)

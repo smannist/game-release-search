@@ -29,6 +29,7 @@
               class="form-control"
               type="text"
               name="synopsis_add"
+              placeholder="Max. 125 char"
               required
             />
             <label class="form-label" for="name">Synopsis</label>
@@ -38,11 +39,10 @@
               class="form-control"
               type="text"
               name="release_add"
+              placeholder="YYYY-MM-DD"
               required
             />
-            <label class="form-label" for="name"
-              >Release date (YYYY-MM-DD)
-            </label>
+            <label class="form-label" for="name">Release date </label>
           </div>
           <input type="submit" value="Confirm" />
           <input
@@ -95,6 +95,7 @@
               class="form-control"
               type="text"
               name="synopsis_edit"
+              placeholder="Max. 125 char"
               required
             />
             <label class="form-label" for="name">Synopsis</label>
@@ -104,11 +105,10 @@
               class="form-control"
               type="text"
               name="release_edit"
+              placeholder="YYYY-MM-DD"
               required
             />
-            <label class="form-label" for="name"
-              >Release date (YYYY-MM-DD)</label
-            >
+            <label class="form-label" for="name">Release date</label>
           </div>
           <input type="submit" value="Confirm" />
           <input
@@ -133,6 +133,32 @@
             {% for game in games2 %}
             <option value="{{ game.id }}" name="id_delete">
               {{ game[1] }} ({{ game[2] }})
+            </option>
+            {% endfor %}
+          </select>
+          <input type="submit" value="Confirm" />
+          <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ session.csrf_token }}"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container platforms-remove">
+    <div class="row">
+      <div class="col">
+        <h1>Delete user ratings</h1>
+        {% with messages = get_flashed_messages(category_filter=["rating"]) %}
+        {% if messages %} {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %} {% endif %} {% endwith %}
+        <form action="/deleterating" method="POST">
+          <select name="id_rating" id="id_rating">
+            {% for user in users %}
+            <option value="{{ user.id }}" name="id_rating">
+              {{ user[1] }}
             </option>
             {% endfor %}
           </select>
