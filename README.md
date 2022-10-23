@@ -29,6 +29,7 @@ Plans for the future:
 - Better UI
 - Small icons for games
 - More descriptive error handling / confirmation messages
+- Dynamic pop-ups instead of flash messaging (much nicer)
 
 ## Running the application locally
 
