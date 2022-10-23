@@ -62,8 +62,10 @@ def games(platform):
         rating = rating_info[0]
         game_id = rating_info[1]
         user_id = session["user_id"]
+        target_game = game.get_game(game_id)
         game.set_rated_true(game_id)
         game.rate_game(rating, user_id, game_id)
+        flash(f"You rated {target_game} {rating}/5!", "rated")
         return redirect(f"/platforms/{platform}/games")
     return render_template("games.html", games=games, all_ratings=all_ratings, platform=platform, admin=is_admin)
 

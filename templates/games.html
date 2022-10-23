@@ -2,7 +2,13 @@
 
 <div class="jumbotron vertical-center">
   <div class="container">
-    <h1>Upcoming games</h1>
+    <div>
+      <h1>Upcoming games</h1>
+    </div>
+    {% with messages = get_flashed_messages(category_filter=["rated"]) %}
+    {% if messages %} {% for message in messages %}
+      <p class="align-right">{{message}}</p>
+    {% endfor %} {% endif %} {% endwith %}
     <div class="row bg-danger">
       <div class="col info-text-games">Title</div>
       <div class="col info-text-games">Synopsis</div>

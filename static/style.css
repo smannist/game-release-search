@@ -98,3 +98,7 @@ a {
 .mb {
     margin-bottom: 15px !important;
 }
+
+.align-right {
+    padding-left:490px;
+}
