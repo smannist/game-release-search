@@ -1,6 +1,6 @@
 # Description
 
-The application allows the user to search for the latest video game releases on most modern platforms (e.g. PC, PS5) as well as rate them based on their level of interest.
+Video game release search and management
 
 ## Features
 
@@ -14,17 +14,21 @@ The application allows the user to search for the latest video game releases on 
 - The administrator can see a list of all video game ratings
 - The administrator can delete video game ratings
 
-## Current state, testing the application and future ideas
+## Current state, testing the application and future
 
-All planned features are working.
+All planned features are working. If you want to test admin features, you can use the following account:
+
+| Username | Password |
+| -------- | -------- |
+| admin    | admin    |
 
 The application can be tested at [Heroku](https://game-release-search.herokuapp.com/).
 
-Ideas for the future:
+Plans for the future:
 
 - Better UI
-- Improvements to game management
-- Small game icons to game view
+- Small icons for games
+- More descriptive error handling / confirmation messages
 
 ## Running the application locally
 
