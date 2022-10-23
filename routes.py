@@ -115,7 +115,7 @@ def add_platform():
         else:
             flash(f"Platform {name} already exists", "add")
             return redirect("/adminportal/manageplatforms")
-    flash("Image size cannot be larger than 100 kB", "add")
+    flash("Image size to large (max 100 kB) or wrong type (not PNG/JPG)", "add")
     return redirect("/adminportal/manageplatforms")
 
 @app.route("/deleteplatform", methods=["POST"])
@@ -142,7 +142,7 @@ def edit_platform():
         platform.edit_platform(name, image, id)
         flash(f"Platform {target_platform} edited successfully!", "edit")
         return redirect("/adminportal/manageplatforms")
-    flash("Image size cannot be larger than 100 kB", "edit")
+    flash("Image size to large (max 100 kB) or wrong type (not PNG/JPG)", "edit")
     return redirect("/adminportal/manageplatforms")
 
 @app.route("/adminportal/managegamerating")
