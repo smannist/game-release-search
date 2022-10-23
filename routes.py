@@ -40,7 +40,7 @@ def signup():
         if user.create_user(username, password):
             return redirect("/signin")
         flash("Username is already taken or invalid input", "signup")
-        return render_template("signup.html", error=True)
+        return render_template("signup.html")
     return render_template("signup.html")
 
 @app.route("/platforms")
@@ -107,16 +107,14 @@ def add_platform():
         flash("Platform name cannot contain only spaces", "add")
         return redirect("/adminportal/manageplatforms")
     if util.validate_img_type(file) and len(image) < 100*1024:
-        try:
-            platform.add_platform(name, image)
+        if platform.add_platform(name, image):
             flash(f"Platform {name} added successfully!", "add")
             return redirect("/adminportal/manageplatforms")
-        except:
+        else:
             flash(f"Platform {name} already exists", "add")
             return redirect("/adminportal/manageplatforms")
-    else:
-        flash("Image size cannot be larger than 100 kB", "add")
-        return redirect("/adminportal/manageplatforms")
+    flash("Image size cannot be larger than 100 kB", "add")
+    return redirect("/adminportal/manageplatforms")
 
 @app.route("/deleteplatform", methods=["POST"])
 def delete_platform():
