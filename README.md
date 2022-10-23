@@ -14,26 +14,51 @@ The application allows the user to search for the latest video game releases on 
 - The administrator can see a list of all video game ratings
 - The administrator can delete video game ratings
 
-## Current state and testing the application
+## Current state, testing the application and future ideas
 
-Currently working features:
-
-- User sign in / out and sign up
-- User can view platforms list
-- User can view games list
-- User can rate games
-- User can see a list of games they have previously rated (My Ratings)
-- Admin can edit, add, remove platforms and games
-
-TODO:
-
-- Game rating deletion
-- Tons of confirmation messages
-
-If time:
-
-- Find a way to improve UI
-- Use pylint to improve code quality
-- General clean up
+All planned features are working.
 
 The application can be tested at [Heroku](https://game-release-search.herokuapp.com/).
+
+Ideas for the future:
+
+- Better UI
+- Improvements to game management
+- Small game icons to game view
+
+## Running the application locally
+
+1. Install and run PostgreSQL database.
+2. Clone the repository
+
+Create the following .env file:
+
+```
+DATABASE_URL=database location
+SECRET_KEY=secure key
+```
+
+Setup and run venv virtual environment:
+
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Install requirements:
+
+```
+pip install -r requirements.txt
+```
+
+Populate the database:
+
+```
+psql < schema/schema.sql
+```
+
+And finally to run the application:
+
+```
+flask --app app.py run
+```
