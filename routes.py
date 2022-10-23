@@ -16,9 +16,12 @@ def signin():
         username = request.form["username"]
         password = request.form["password"]
         if user.validate_user(username, password):
+            if user.is_admin():
+                return redirect("/adminportal")
             return redirect("/platforms")
         flash("Invalid username or password", "signin")
         return render_template("signin.html")
+    return render_template("signin.html")
 
 @app.route("/signout")
 def signout():
@@ -38,20 +41,21 @@ def signup():
             return redirect("/signin")
         flash("Username is already taken or invalid input", "signup")
         return render_template("signup.html", error=True)
+    return render_template("signup.html")
 
 @app.route("/platforms")
 def platforms():
     is_admin = user.is_admin()
-    platforms = platform.get_platform_info()
-    return render_template("platforms.html", platforms=platforms, admin=is_admin)
+    get_platforms = platform.get_platform_info()
+    return render_template("platforms.html", platforms=get_platforms, admin=is_admin)
 
 @app.route("/platforms/<string:platform>/games", methods=["GET", "POST"])
 def games(platform):
     is_admin = user.is_admin()
     if request.method == "GET":
-        games = game.get_game_info(platform)
+        get_games = game.get_game_info(platform)
         all_ratings = game.get_rating_info()
-        return render_template("games.html", games=games, all_ratings=all_ratings, platform=platform, admin=is_admin)
+        return render_template("games.html", games=get_games, all_ratings=all_ratings, platform=platform, admin=is_admin)
     if request.method == "POST":
         user.check_csrf()
         rating_info = util.string_to_list(request.form["rating_info"])
@@ -61,6 +65,7 @@ def games(platform):
         game.set_rated_true(game_id)
         game.rate_game(rating, user_id, game_id)
         return redirect(f"/platforms/{platform}/games")
+    return render_template("games.html", games=games, all_ratings=all_ratings, platform=platform, admin=is_admin)
 
 @app.route("/image/<int:id>")
 def images(id):
@@ -102,7 +107,7 @@ def add_platform():
         flash("Platform name cannot contain only spaces", "add")
         return redirect("/adminportal/manageplatforms")
     if util.validate_img_type(file) and len(image) < 100*1024:
-        try: 
+        try:
             platform.add_platform(name, image)
             flash(f"Platform {name} added successfully!", "add")
             return redirect("/adminportal/manageplatforms")
@@ -159,13 +164,13 @@ def add_game():
     synopsis = request.form["synopsis_add"]
     release_date = request.form["release_add"]
     if len(synopsis) > 125:
-        flash(f"Synopsis should be no longer than 125 characters", "add")
+        flash("Synopsis should be no longer than 125 characters", "add")
         return redirect("/adminportal/managegamerating")
     if not util.validate_date(release_date):
-        flash(f"Date should be in YYYY-MM-DD format", "add")
+        flash("Date should be in YYYY-MM-DD format", "add")
         return redirect("/adminportal/managegamerating")
     if title.isspace() or synopsis.isspace() or release_date.isspace():
-        flash(f"Fields cannot contain only spaces", "add")
+        flash("Fields cannot contain only spaces", "add")
         return redirect("/adminportal/managegamerating")
     game.add_game(title,synopsis,release_date,platform_id)
     flash(f"Game {title} added successfully (if it did not already exist)!", "add")
@@ -181,13 +186,13 @@ def edit_game():
     release_date = request.form["release_edit"]
     target_game = game.get_game(game_id)
     if len(synopsis) > 125:
-        flash(f"Synopsis should be no longer than 125 characters", "edit")
+        flash("Synopsis should be no longer than 125 characters", "edit")
         return redirect("/adminportal/managegamerating")
     if not util.validate_date(release_date):
-        flash(f"Date should be in YYYY-MM-DD format", "edit")
+        flash("Date should be in YYYY-MM-DD format", "edit")
         return redirect("/adminportal/managegamerating")
     if title.isspace() or synopsis.isspace() or release_date.isspace():
-        flash(f"Fields cannot contain only spaces", "edit")
+        flash("Fields cannot contain only spaces", "edit")
         return redirect("/adminportal/managegamerating")
     game.edit_game(title,synopsis,release_date,platform_id,game_id)
     flash(f"Game {target_game} edited successfully!", "edit")

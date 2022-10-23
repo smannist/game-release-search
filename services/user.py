@@ -1,5 +1,5 @@
 import secrets
-from flask import Flask, session, abort, request
+from flask import session, abort, request
 from werkzeug.security import generate_password_hash, check_password_hash
 from db import db
 from utils import util
@@ -19,10 +19,8 @@ def create_user(username, password):
 def validate_user(username, password):
     sql = "SELECT id, password FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
-    user = result.fetchone()    
-    if not user:
-        return False
-    else:
+    user = result.fetchone()
+    if user:
         hash_value = user.password
         if check_password_hash(hash_value, password):
             session["username"] = username
