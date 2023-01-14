@@ -56,7 +56,7 @@ Install requirements:
 pip install -r requirements.txt
 ```
 
-Populate the database:
+Create database tables:
 
 ```
 psql < schema/schema.sql
