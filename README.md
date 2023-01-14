@@ -22,7 +22,7 @@ All planned features are working. If you want to test admin features, you can us
 | -------- | -------- |
 | admin    | admin    |
 
-The application can be tested at [Heroku](https://game-release-search.herokuapp.com/).
+Currently the application can only be ran locally due to Heroku no longer offering free hosting service for PostgreSQL database. I'm looking for a replacement host.
 
 Plans for the future:
 
